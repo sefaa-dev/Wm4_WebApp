@@ -1,0 +1,13 @@
+﻿@model List<Urun>
+@{ 
+   // Layout = "_Layout";  viewstart içinde yazdık
+    ViewBag.Title = "Ana Sayfa @View";
+}
+
+@foreach (var item in Model)
+{
+    <p>
+        @item.Id - @item.Ad - @($"{item.Fiyat:c2}")
+
+    </p>
+}
