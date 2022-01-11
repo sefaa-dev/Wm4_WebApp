@@ -370,7 +370,7 @@ namespace ItServiceApp.Controllers
             }
             else
             {
-                var message = string.Join("<br>", result.Errors.Select(x => x.Description));    df     
+                var message = string.Join("<br>", result.Errors.Select(x => x.Description));     
                 TempData["Message"] = message;
                 return View();
 
