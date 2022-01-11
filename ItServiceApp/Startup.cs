@@ -1,5 +1,6 @@
 using ItServiceApp.Data;
 using ItServiceApp.InjectOrnek;
+using ItServiceApp.MapperProfiles;
 using ItServiceApp.Models.Identity;
 using ItServiceApp.Services;
 using Microsoft.AspNetCore.Builder;
@@ -61,6 +62,11 @@ namespace ItServiceApp
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
+            });
+
+            services.AddAutoMapper(options =>
+            {
+                options.AddProfile(typeof(AccountProfile));
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
