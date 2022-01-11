@@ -154,7 +154,7 @@ namespace ItServiceApp.Controllers
                 await _userManager.AddToRoleAsync(user, RoleNames.User);
             }
 
-            return View();
+            return View(); 
         }
 
         [HttpGet]
