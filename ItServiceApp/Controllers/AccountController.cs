@@ -324,17 +324,17 @@ namespace ItServiceApp.Controllers
                 {
                     Contacts = new string[] { user.Email },
                     Body =
-                        $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                        $"Please reset your password by <a href='{HtmlEncoder.Default.Encode  (callbackUrl)}'>clicking here</a>.",
                     Subject = "Reset Password"
                 };
                 await _emailSender.SendAsync(emailMessage);
-                ViewBag.Message = "Mailinize Şifre güncelleme yönergemiz gönderilmiştir"; 
-            }
-
+                ViewBag.Message = "Mailinize Şifre güncelleme yönergemiz gönderilmiştir";           
+            } 
+             
             return View();          
         }
         [AllowAnonymous]
-        public IActionResult ConfirmResetPassword(string userId, string code)
+        public IActionResult ConfirmResetPassword(string userId, string code) 
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
             {
