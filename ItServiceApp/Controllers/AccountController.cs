@@ -328,7 +328,7 @@ namespace ItServiceApp.Controllers
                     Subject = "Reset Password"
                 };
                 await _emailSender.SendAsync(emailMessage);
-                ViewBag.Message = "Mailinize Şifre güncelleme yönergemiz gönderilmiştir";           
+                ViewBag.Message = "Mailinize Şifre güncelleme yönergemiz gönderilmiştir";            
             } 
              
             return View();          
