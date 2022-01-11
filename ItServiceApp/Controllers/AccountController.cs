@@ -333,7 +333,7 @@ namespace ItServiceApp.Controllers
 
             return View();          
         }
-
+        [AllowAnonymous]
         public IActionResult ConfirmResetPassword(string userId, string code)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
@@ -342,6 +342,7 @@ namespace ItServiceApp.Controllers
             }
 
             ViewBag.Code = code;
+            ViewBag.UserId = userId;
             return View();
         }
 
@@ -360,7 +361,8 @@ namespace ItServiceApp.Controllers
                 ModelState.AddModelError(string.Empty, "Kullanıcı bulunamadı");
                 return View();
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+            var result = await _userManager.ResetPasswordAsync(user, code, model.NewPassword);
 
             if (result.Succeeded)
             {
