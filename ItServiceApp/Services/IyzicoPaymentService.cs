@@ -1,4 +1,5 @@
 ﻿using ItServiceApp.Models;
+using ItServiceApp.Models.Payment;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace ItServiceApp.Services
 
         }
 
-        public void Pay()
+        public void Pay(PaymentModel model)
         {
 
         }
