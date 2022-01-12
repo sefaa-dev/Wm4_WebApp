@@ -13,15 +13,14 @@ namespace ItServiceApp.Models.Entities
         public string Line { get; set; }
         public string PostCode { get; set; }
         public AddressTypes AddressType { get; set; }
-        public int CityId { get; set; }
+
         public int StateId { get; set; }
 
 
-        [StringLength(128)]
+        [StringLength(450)]
         public string UserId { get; set; }
 
-        [ForeignKey(nameof(CityId))]
-        public virtual City City { get; set; }
+     
 
         [ForeignKey(nameof(StateId))]
         public virtual State State { get; set; }
