@@ -27,9 +27,16 @@ namespace ItServiceApp.Services
 
         }
 
-        public void Pay(PaymentModel model)
-        {
 
+
+
+
+        public PaymentResponseModel Pay(PaymentModel model)
+        {
+            
+            
+
+            return null;
         }
     }
 }
