@@ -67,10 +67,12 @@ namespace ItServiceApp
             services.AddAutoMapper(options =>
             {
                 options.AddProfile(typeof(AccountProfile));
+                options.AddProfile(typeof(PaymentProfile));
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IMyDependency, NewMyDependency>();
+            services.AddScoped<IPaymentService, IyzicoPaymentService>();
+            services.AddScoped<IMyDependency, NewMyDependency>(); //loose coupling
             services.AddControllersWithViews();
         }
 
