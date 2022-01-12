@@ -17,5 +17,7 @@ namespace ItServiceApp.Models.Payment
         public long? BankCode { get; set; }
         public string BankName { get; set; }
         public int? ForceCvc { get; set; }
+
+        public List<InstallmentPriceModel> InstallmentPrices { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ItServiceApp.Models
 {
-    public class AdressModel
+    public class AddressModel
     {
         public string Description { get; set; }
         public string ZipCode { get; set; }
