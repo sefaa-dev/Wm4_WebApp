@@ -1,15 +1,16 @@
-﻿@{
+﻿@model PaymentViewModel
+
+@{
     ViewBag.Title = $"Ödeme Sayfası";
 }
 <!--====== Page Title start ======-->
 <partial name="Partials/_PageStartPartial" />
 <!--====== Page Title End ======-->
-
 <!--====== Shoping Checkout Start  ======-->
 <section class="shoping-checkout-area section-gap">
     <div class="container">
         <div class="user-actions mb-40">
-            <p>Returning customer? <a href="#">Click here to login</a></p>
+            <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <form>
             <div class="row">
@@ -19,79 +20,37 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Country <span>*</span></label>
-                                    <select>
-                                        <option data-display="Select">United Arab Emirates</option>
-                                        <option value="1">China</option>
-                                        <option value="2">United Kingdom</option>
-                                        <option value="3">Japan</option>
-                                        <option value="4">France</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>First Name <span>*</span></label>
-                                    <input type="text" name="name">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Last Name <span>*</span></label>
-                                    <input type="text" name="name">
+                                    <label asp-for="CardModel.CardHolderName"></label>
+                                    <input asp-for="CardModel.CardHolderName" />
+                                    <span asp-validation-for="CardModel.CardHolderName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Company Name <span>*</span></label>
-                                    <input type="text" name="name">
+                                    <label asp-for="CardModel.CardNumber"></label>
+                                    <input asp-for="CardModel.CardNumber" id="txtCardNumber" />
+                                    <span asp-validation-for="CardModel.CardNumber" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Town / City <span>*</span></label>
-                                    <input type="text" name="name">
+                                    <label asp-for="CardModel.ExpireMonth"></label>
+                                    <input asp-for="CardModel.ExpireMonth" />
+                                    <span asp-validation-for="CardModel.ExpireMonth" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>State / County <span>*</span></label>
-                                    <input type="text" name="name">
+                                    <label asp-for="CardModel.ExpireYear"></label>
+                                    <input asp-for="CardModel.ExpireYear" />
+                                    <span asp-validation-for="CardModel.ExpireYear" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Postcode / Zip <span>*</span></label>
-                                    <input type="text" name="name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Email Address <span>*</span></label>
-                                    <input type="text" name="email">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Phone <span>*</span></label>
-                                    <input type="text" name="phone">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-check">
-                                    <input type="checkbox" id="create-an-account" class="form-check-input">
-                                    <label for="create-an-account" class="form-check-label">Create an account?</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-check">
-                                    <input type="checkbox" id="ship-different-address" class="form-check-input">
-                                    <label for="ship-different-address" class="form-check-label">Ship to a different address?</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <textarea name="address" placeholder="Order Notes"></textarea>
+                                    <label asp-for="CardModel.Cvc"></label>
+                                    <input asp-for="CardModel.Cvc" />
+                                    <span asp-validation-for="CardModel.Cvc" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -188,6 +147,15 @@
 </section>
 <!--====== Shoping Checkout End ======-->
 
+@section Scripts{ 
+<script>
+    $("#txtCardNumber").keyup(function () {
+        console.log();
+    });
+</script>
+}
+
+
 @section Styles
 {
     <style>
@@ -197,10 +165,4 @@
             padding: 0 15px;
         }
     </style>
-}
-
-
-
-
-
-
+} 
