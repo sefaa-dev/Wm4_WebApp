@@ -13,7 +13,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <form asp-action="Index" method="post">
-            <input asp-for="Installment" id="hdInstallment" />
+            <input asp-for="Installment" type="hidden" id="hdInstallment" value="1" />
             <div class="row">
                 <div class="col-lg-6">
                     <div class="billing-details">
@@ -126,8 +126,9 @@
             $(label).attr("for", "rd" + i).html(data.installmentNumber).appendTo(td1);
 
             $(radio).on('change', function () {
-                console.log($(this).attr("data"));
-                console.log($(this).val());
+                $("#hdInstallment").val($(this).attr("data"));
+          
+               
             });
 
             if (i == 0) {

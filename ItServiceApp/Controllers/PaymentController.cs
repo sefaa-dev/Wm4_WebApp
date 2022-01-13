@@ -38,7 +38,7 @@ namespace ItServiceApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult MakePayment(PaymentViewModel model)
+        public IActionResult Index(PaymentViewModel model)
         {
             return View();
         }
