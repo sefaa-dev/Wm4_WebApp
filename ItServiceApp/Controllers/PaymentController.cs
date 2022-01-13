@@ -1,4 +1,6 @@
-﻿using ItServiceApp.Services;
+﻿using ItServiceApp.Models;
+using ItServiceApp.Models.Payment;
+using ItServiceApp.Services;
 using ItServiceApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +42,16 @@ namespace ItServiceApp.Controllers
         [HttpPost]
         public IActionResult Index(PaymentViewModel model)
         {
+            var paymentModel = new PaymentModel()
+            {
+                Installment = model.Installment,
+                Address = new AddressModel(),
+                BasketList = new List<BasketModel>(),
+                Customer = new CustomerModel(),
+                CardModel = model.CardModel,
+                Price = 1000,
+            };
+            var result = _paymentService.Pay(paymentModel);
             return View();
         }
 
