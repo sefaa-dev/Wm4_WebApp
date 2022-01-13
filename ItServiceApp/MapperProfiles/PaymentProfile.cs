@@ -20,7 +20,7 @@ namespace ItServiceApp.MapperProfiles
 
             CreateMap<InstallmentPriceModel, InstallmentPrice>().ReverseMap();
 
-            CreateMap<InstallmentModel, InstallmentInfo>().ForMember(dest => dest.InstallmentDetails, opt => opt.MapFrom(src => src.InstallmentPrices)).ReverseMap();
+            CreateMap<InstallmentModel, InstallmentDetail>().ReverseMap();
 
 
         }
