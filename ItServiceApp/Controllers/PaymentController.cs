@@ -36,7 +36,7 @@ namespace ItServiceApp.Controllers
             });
             var result = _paymentService.CheckInstallments(binNumber, 1000);
             return Ok(result);
-        }
+        } 
 
         [Authorize]
         [HttpPost]
