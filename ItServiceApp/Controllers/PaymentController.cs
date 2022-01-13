@@ -31,7 +31,8 @@ namespace ItServiceApp.Controllers
             {
                 Message = "Bad req."
             });
-            return Ok(binNumber);
+            var result = _paymentService.CheckInstallments(binNumber, 1000);
+            return Ok(result);
         }
 
     }
