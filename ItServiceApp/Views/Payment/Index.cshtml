@@ -150,7 +150,11 @@
 @section Scripts{ 
 <script>
     $("#txtCardNumber").keyup(function () {
-        console.log();
+        var bin = $(this).val();
+        if (bin.length === 6) {
+            console.log(bin);
+
+        }
     });
 </script>
 }

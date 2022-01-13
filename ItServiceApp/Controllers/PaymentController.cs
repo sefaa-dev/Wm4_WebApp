@@ -21,5 +21,18 @@ namespace ItServiceApp.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult CheckInstallment(string binNumber)
+        {
+            if (binNumber.Length != 6)
+                return BadRequest(new
+            {
+                Message = "Bad req."
+            });
+            return Ok(binNumber);
+        }
+
     }
 }
