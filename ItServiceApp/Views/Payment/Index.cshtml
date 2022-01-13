@@ -153,6 +153,21 @@
         var bin = $(this).val();
         if (bin.length === 6) {
             console.log(bin);
+            var model = {
+                binNumber: bin
+            }
+            $.ajax({
+                url: '@Url.Action("CheckInstallment","Payment")',
+                type: "POST",
+                data: model,
+                dataType: "json",
+                error: function (request, status, error) {
+                    console.log(request);
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
 
         }
     });
