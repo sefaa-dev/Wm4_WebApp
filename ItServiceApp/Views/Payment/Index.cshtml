@@ -151,11 +151,11 @@
 <script>
     $("#txtCardNumber").keyup(function () {
         var bin = $(this).val();
-        if (bin.length >= 6) {
+        if (bin.length === 6) {
             console.log(bin);
             var model = {
                 binNumber: bin
-            }
+            };
             $.ajax({
                 url: '@Url.Action("CheckInstallment","Payment")',
                 type: "POST",
