@@ -157,7 +157,7 @@
                 binNumber: bin
             };
             $.ajax({
-                url: '@Url.Action("CheckInstallment","Payment")',
+                url: '@Url.Action("CheckInstallment","Payment")', 
                 type: "POST",
                 data: model,
                 dataType: "json",
