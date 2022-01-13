@@ -1,4 +1,5 @@
 ﻿using ItServiceApp.Services;
+using ItServiceApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,6 +34,13 @@ namespace ItServiceApp.Controllers
             });
             var result = _paymentService.CheckInstallments(binNumber, 1000);
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult MakePayment(PaymentViewModel model)
+        {
+            return View();
         }
 
     }
