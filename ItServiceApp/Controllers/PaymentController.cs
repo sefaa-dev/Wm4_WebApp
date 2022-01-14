@@ -63,11 +63,11 @@ namespace ItServiceApp.Controllers
 
             if (installmentNumber != null)
             {
-                paymentModel.PaidPrice = decimal.Parse(installmentNumber.TotalPrice);
+                paymentModel.PaidPrice = decimal.Parse(installmentNumber.TotalPrice.Replace('.',','));
             }
             else
             {
-                paymentModel.PaidPrice = decimal.Parse(installmentInfo.InstallmentPrices[0].TotalPrice);
+                paymentModel.PaidPrice = decimal.Parse(installmentInfo.InstallmentPrices[0].TotalPrice.Replace('.', ','));
             }
 
 
