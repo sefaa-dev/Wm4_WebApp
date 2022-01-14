@@ -58,6 +58,8 @@ namespace ItServiceApp.Services
             paymentRequest.PaymentChannel = PaymentChannel.WEB.ToString();
             paymentRequest.PaymentGroup = PaymentGroup.SUBSCRIPTION.ToString();
 
+            paymentRequest.PaymentCard = _mapper.Map<PaymentCard>(model.CardModel);
+
             var user = _userManager.FindByIdAsync(model.UserId).Result;
 
             var buyer = new Buyer()
