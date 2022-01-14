@@ -144,7 +144,7 @@ namespace ItServiceApp.Services
             var request = this.InitialPaymentRequest(model);
             var payment = Payment.Create(request, _options);
 
-        return null;
+        return _mapper.Map<PaymentResponseModel>(payment);
     }
 }
 }
