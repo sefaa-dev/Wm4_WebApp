@@ -58,27 +58,55 @@ namespace ItServiceApp.Services
             paymentRequest.PaymentChannel = PaymentChannel.WEB.ToString();
             paymentRequest.PaymentGroup = PaymentGroup.SUBSCRIPTION.ToString();
 
+            var user = _userManager.FindByIdAsync(model.UserId).Result;
 
             var buyer = new Buyer()
             {
-                Id = "BY789",
-                Name = "Johm",
-                Surname =
-                GsmNumber =
-                Email =
-                IdentityNumber =
-                LastLoginDate =
-                RegistrationDate =
-                RegistrationAddress =
-                Ip =
-                City =
-                Country =
-                ZipCode =
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.SurName,
+                GsmNumber = user.PhoneNumber,
+                Email = user.Email,
+                IdentityNumber = "11111111110",
+                LastLoginDate = $"{DateTime.Now}",
+                RegistrationDate = $"{user.CreatedDate}",
+                RegistrationAddress = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1",
+                Ip = model.Ip,
+                City = "İstanbul",
+                Country = "Turkey",
+                ZipCode = "34732"
             };
 
             paymentRequest.Buyer = buyer;
 
-            return null;
+            Address billingAddress = new Address
+            {
+                ContactName = $"{user.Name} {user.SurName}",
+                City = "Istanbul",
+                Country = "Turkey",
+                Description = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1",
+                ZipCode = "34732"
+            };
+
+            paymentRequest.BillingAddress = billingAddress;
+
+            var basketItems = new List<BasketItem>();
+            var firstBasketItem = new BasketItem
+            {
+                Id = "BI101",
+                Name = "Binocular",
+                Category1 = "Collectibles",
+                Category2 = "Accessories",
+                ItemType = BasketItemType.VIRTUAL.ToString(),
+                Price = model.Price.ToString(new CultureInfo("en-US"))
+            };
+
+            basketItems.Add(firstBasketItem);
+            paymentRequest.BasketItems = basketItems;
+
+
+
+            return paymentRequest;
         }
 
 
