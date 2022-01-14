@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using ItServiceApp.Models;
+using ItServiceApp.Models.Identity;
 using ItServiceApp.Models.Payment;
 using Iyzipay.Model;
 using Iyzipay.Request;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using MUsefullMethods;
 using System;
@@ -18,11 +20,13 @@ namespace ItServiceApp.Services
         private readonly IConfiguration _configuration;
         private readonly IyzicoPaymentOptions _options;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IyzicoPaymentService(IConfiguration configuration, IMapper mapper)
+        public IyzicoPaymentService(IConfiguration configuration, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _configuration = configuration;
             _mapper = mapper;
+            _userManager = userManager;
             var section = configuration.GetSection(IyzicoPaymentOptions.Key);
             _options = new IyzicoPaymentOptions()
             {
@@ -38,6 +42,43 @@ namespace ItServiceApp.Services
         private string GenerateConversationId()
         {
             return StringHelpers.GenerateUniqueCode();
+        }
+
+        private CreatePaymentRequest InitialPaymentRequest(PaymentModel model)
+        {
+            var paymentRequest = new CreatePaymentRequest();
+
+            paymentRequest.Installment = model.Installment;
+            paymentRequest.Locale = Locale.TR.ToString();
+            paymentRequest.ConversationId = GenerateConversationId();
+            paymentRequest.Price = model.Price.ToString(new CultureInfo("en-US"));
+            paymentRequest.PaidPrice = model.PaidPrice.ToString(new CultureInfo("en-US"));
+            paymentRequest.Currency = Currency.TRY.ToString();
+            paymentRequest.BasketId = StringHelpers.GenerateUniqueCode();
+            paymentRequest.PaymentChannel = PaymentChannel.WEB.ToString();
+            paymentRequest.PaymentGroup = PaymentGroup.SUBSCRIPTION.ToString();
+
+
+            var buyer = new Buyer()
+            {
+                Id = "BY789",
+                Name = "Johm",
+                Surname =
+                GsmNumber =
+                Email =
+                IdentityNumber =
+                LastLoginDate =
+                RegistrationDate =
+                RegistrationAddress =
+                Ip =
+                City =
+                Country =
+                ZipCode =
+            };
+
+            paymentRequest.Buyer = buyer;
+
+            return null;
         }
 
 
@@ -71,6 +112,9 @@ namespace ItServiceApp.Services
 
     public PaymentResponseModel Pay(PaymentModel model)
     {
+
+            var request = this.InitialPaymentRequest(model);
+            var payment = Payment.Create(request, _options);
 
         return null;
     }
