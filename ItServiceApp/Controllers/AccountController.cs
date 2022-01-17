@@ -178,14 +178,14 @@ namespace ItServiceApp.Controllers
 
             if (result.Succeeded)
             {
-                await _emailSender.SendAsync(new EmailMessage()
-                {
-                    Contacts = new string[] { "www@gmail.com" },
-                    Body = $"{HttpContext.User.Identity.Name} Sisteme giriş yaptı!",
-                    Subject = $"Merhaba {HttpContext.User.Identity.Name}"
-                });
+                //await _emailSender.SendAsync(new EmailMessage()
+                //{
+                //    Contacts = new string[] { "www@gmail.com" },
+                //    Body = $"{HttpContext.User.Identity.Name} Sisteme giriş yaptı!",
+                //    Subject = $"Merhaba {HttpContext.User.Identity.Name}"
+                //});
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             else
             {
