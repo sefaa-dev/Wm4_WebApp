@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ItServiceApp.Areas.Admin.Controllers   
 {
-    public class ManageController : AdminBaseController
+    public class ManageController :  AdminBaseController
     {
        public IActionResult Index()
         {
