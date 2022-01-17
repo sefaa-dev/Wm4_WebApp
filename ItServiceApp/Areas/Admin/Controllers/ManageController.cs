@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;   
 
-namespace ItServiceApp.Areas.Admin.Controllers    
+namespace ItServiceApp.Areas.Admin.Controllers     
 {
     public class ManageController :  AdminBaseController
     {
