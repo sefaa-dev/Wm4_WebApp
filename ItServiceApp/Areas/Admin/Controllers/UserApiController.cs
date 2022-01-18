@@ -29,7 +29,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var users = _userManager.Users.OrderBy(x => x.CreatedDate).ToList(); 
+            var users = _userManager.Users.OrderBy(x => x.CreatedDate).ToList();  
 
             return Ok(new JsonResponseViewModel()
             {
