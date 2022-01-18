@@ -59,7 +59,7 @@
         $(() => {
             var userData = null;
             $.ajax({
-                url: '@Url.Action("GetTest", "UserApi")',
+                url: '@Url.Action("GetUsers", "UserApi")',
                 method: 'GET',
                 success: function (response) {
                     console.log(response);
