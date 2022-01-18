@@ -27,7 +27,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public IActionResult GetUsers()
+        public IActionResult GetUsers() 
         {
             var users = _userManager.Users.OrderBy(x => x.CreatedDate).ToList();  
 
