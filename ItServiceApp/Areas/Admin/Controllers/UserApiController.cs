@@ -44,10 +44,12 @@ namespace ItServiceApp.Areas.Admin.Controllers
                     Surname = "soyad" + 1,
                     Name = "ad" + 1,
 
-                });
-                Thread.Sleep(100);
+                });            
             }
-            return Ok(users);
+            return Ok(new JsonResponseViewModel()
+            {
+                Data = users
+            });
         }
         
     }
