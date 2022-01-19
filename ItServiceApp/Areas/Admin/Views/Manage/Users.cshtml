@@ -107,6 +107,9 @@
                         allowedPageSizes: [5, 15, 30, 45],
                         showInfo: true
                     },
+                    selection: {
+                        mode: "multiple"
+                    },
                     columns: [
                         {
                             capion: 'Id',
@@ -125,6 +128,19 @@
                         {
                             caption: 'E-Posta',
                             dataField: "email"
+                        },
+                        {
+                            caption: 'Detay',
+                            cellTemplate: function (container, options) {
+                                console.log(options);
+                                var current = options.data;
+                                var url = '@Url.Action("UserDetail","Manage")' + '/' + current.id;
+
+                                $("<a href=" + url + "/>")
+                                    .text("Detay")
+                                    .addClass('btn btn-block btn-info btn-sm')
+                                    .appendTo(container);
+                            }
                         }
                         ],
 
