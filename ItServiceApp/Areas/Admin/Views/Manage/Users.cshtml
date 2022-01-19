@@ -78,7 +78,19 @@
             });
             function loadGrid() {
                 $('#dxGrid').dxDataGrid({
+                    showColumnLines: true,
+                    allowColumnResizing: true,
+                    showRowLines: true,
+                    rowAlternationEnabled: true,
+                    showBorders: true,
+
+
                     dataSource: userData,
+                    searcPanel: {
+                        visible: true,
+                        width: 240,
+                        placeholder: "Ara..."
+                    },
                     columns: [
                         {
                             capion: 'Id',
