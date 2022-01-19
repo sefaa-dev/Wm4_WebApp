@@ -79,7 +79,27 @@
             function loadGrid() {
                 $('#dxGrid').dxDataGrid({
                     dataSource: userData,
-                    columns: ['name', 'surname', 'email'],
+                    columns: [
+                        {
+                            capion: 'Id',
+                            dataField: "id",
+                            visible: false,
+                            allowFiltering: false
+                        },
+                        {
+                            caption: 'Ad',
+                            dataField: "name"
+                        },
+                        {
+                            caption: 'Soyad',
+                            dataField: "surname"
+                        },
+                        {
+                            caption: 'E-Posta',
+                            dataField: "email"
+                        }
+                        ],
+
                     showBorders: true,
                 });
             }
