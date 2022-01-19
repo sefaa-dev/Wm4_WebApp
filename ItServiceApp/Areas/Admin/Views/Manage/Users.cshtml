@@ -53,6 +53,7 @@
 
 
     <script>
+        var dataGrid = null;
         $(() => {
             var userData = null;
             $.ajax({
@@ -74,7 +75,7 @@
                 }
             });
             function loadGrid() {
-                $('#dxGrid').dxDataGrid({
+                dataGrid = $('#dxGrid').dxDataGrid({
                     showColumnLines: true,
                     allowColumnResizing: true,
                     showRowLines: true,
@@ -130,6 +131,13 @@
                             dataField: "email"
                         },
                         {
+                            caption: 'Kayıt Tarihi',
+                            dataField: "createdData",
+                            dataType: "date",
+                            format: 'dd/MM/yyyy',
+                            sortOrder: "desc"
+                        },
+                        {
                             caption: 'Detay',
                             cellTemplate: function (container, options) {
                                 console.log(options);
@@ -142,9 +150,9 @@
                                     .appendTo(container);
                             }
                         }
-                        ],
+                    ],
 
-                });
+                }).dxDataGrid("instance");
             }
 
         })
