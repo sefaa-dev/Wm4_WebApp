@@ -9,6 +9,7 @@ using Iyzipay.Model.V2;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace ItServiceApp.Areas.Admin.Controllers
@@ -26,7 +27,10 @@ namespace ItServiceApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Get(string userId, DataSourceLoadOptions options)
         {
-            var data = _dbContext.Addresses.Where(x => x.UserId == userId);
+            var data = _dbContext.Addresses
+                .Include(x => x.State)
+                .ThenInclude(x => x.City)
+                .Where(x => x.UserId == userId);
 
             return Ok(DataSourceLoader.Load(data, options));
         }
