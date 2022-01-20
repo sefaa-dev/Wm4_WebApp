@@ -33,7 +33,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
         {
             var data = _userManager.Users;
 
-            return Ok(new DataSourceLoader.Load(data, loadOptions));  
+            return Ok(DataSourceLoader.Load(data, loadOptions));  
            
         }
 
