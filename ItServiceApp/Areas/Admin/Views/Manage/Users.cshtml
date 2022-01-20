@@ -41,48 +41,40 @@
 
 </div>
 
-@section Styles
+
+
+@section Scripts
 {
 
-}
-
-
-@section Scripts       
-{
-   
-
+    <script src="~/vendor/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
 
     <script>
+const { default: DevExpress } = require("devextreme");
+
         var dataGrid = null;
         $(() => {
-            var userData = null;
-            $.ajax({
-                url: '@Url.Action("GetUsers", "UserApi")',
-                method: 'GET',
-                success: function (response) {
-                    console.log(response);
-                    if (response.isSuccess) {
-                        userData = response.data;
-                        loadGrid();
-                    } else {
-                        alert(response.errorMessage);
-                    }
-                },
-                error: function (a, b, c) {
-                    console.log(a);
-                    console.log(b);
-                    console.log(c);
-                }
-            });
+            var url = 'api/userapi';
+
             function loadGrid() {
+
+
                 dataGrid = $('#dxGrid').dxDataGrid({
+
+                    dataSource: DevExpress.data.AspNet.createStore({
+
+                        key: 'id',
+                        loadUrl: '${url}/getusers'
+                    }),
+
+
+
                     showColumnLines: true,
                     allowColumnResizing: true,
                     showRowLines: true,
                     rowAlternationEnabled: true,
                     showBorders: true,
 
-                    dataSource: userData,
+
                     searchPanel: {
                         visible: true,
                         width: 240,
@@ -134,7 +126,7 @@
                             caption: 'Kayıt Tarihi',
                             dataField: "createdData",
                             dataType: "date",
-                            format: 'dd/MM/yyyy',
+         Url ★ Action                 format: 'dd/MM/yyyy',
                             sortOrder: "desc"
                         },
                         {
