@@ -106,7 +106,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
         public object CityLookup(DataSourceLoadOptions loadOptions)
         {
             var data = _dbContext.Cities
-                .OrderBy(x => x.Order)
+                .OrderBy(x => x.Id)
                 .Select(x => new
                 {
                     id = x.Id,
