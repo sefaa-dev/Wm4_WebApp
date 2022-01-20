@@ -148,13 +148,13 @@
                             caption: 'Kayıt Tarihi',
                             dataField: "createdDate",
                             dataType: "date",
-                            format: 'dd/MM/yyyy',  
+                            format: 'dd/MM/yyyy',     
                             sortOrder: "desc"
-                        },
+                        }, 
                         {
                             caption: 'Detay',
                             cellTemplate: function (container, options) {
-                               
+                                
                                 var current = options.data;
                                 var url = '@Url.Action("UserDetail","Manage")' + '/' + current.id;
 
@@ -169,25 +169,34 @@
                     masterDetail: {
                         enabled: true,
                         template(container, options) {
-                            var currentEmployeeData = options.data;
+                            var currentUser = options.data;
 
                             $('<div>')
                                 .dxDataGrid({
+                                  
                                     columnAutoWidth: true,
                                     showBorders: true,
-                                    columns: ['Subject', {
-                                        dataField: 'StartDate',
-                                        dataType: 'date',
-                                    }, {
-                                            dataField: 'DueDate',
-                                            dataType: 'date',
-                                        }, 'Priority', {
-                                            caption: 'Completed',
-                                            dataType: 'boolean',
-                                            calculateCellValue(rowData) {
-                                                return rowData.Status === 'Completed';
-                                            },
-                                        }],
+                                    //columns: ['Subject', {
+                                    //    dataField: 'StartDate',
+                                    //    dataType: 'date',
+                                    //}, {
+                                    //        dataField: 'DueDate',
+                                    //        dataType: 'date',
+                                    //    }, 'Priority', {
+                                    //        caption: 'Completed',
+                                    //        dataType: 'boolean',
+                                    //        calculateCellValue(rowData) {
+                                    //            return rowData.Status === 'Completed';
+                                    //        },
+                                    //    }],
+                                    editing{
+                                    mode: 'form',
+                                    allowAdding: true,
+                                    allowUpdating: true,
+                                    allowDeleting: true
+                                 
+
+                                },
                                         remoteOperations: {
                                             paging: true,
                                             filtering: true,
@@ -201,8 +210,11 @@
                                     dataSource: DevExpress.data.AspNet.createStore({
 
                                         key: 'id',
-                                        loadUrl: `${url}/getusers`,
-                                        updateUrl: `${url}/updateusers`
+                                        loadUrl: "../../../api/addressapi/get",
+                                        insertUrl: "../../../api/addressapi/insert",
+                                        updateUrl: "../../../api/addressapi/update",
+                                        deleteUrl: "../../../api/addressapi/delete",
+                                        
                                     }),
 
 
