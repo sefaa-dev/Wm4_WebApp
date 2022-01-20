@@ -41,6 +41,10 @@
 
 </div>
 
+@section Styles
+{
+
+}
 
 
 @section Scripts
@@ -150,7 +154,7 @@
                         {
                             caption: 'Detay',
                             cellTemplate: function (container, options) {
-                                console.log(options);
+                               
                                 var current = options.data;
                                 var url = '@Url.Action("UserDetail","Manage")' + '/' + current.id;
 
@@ -158,9 +162,53 @@
                                     .text("Detay")
                                     .addClass('btn btn-block btn-info btn-sm')
                                     .appendTo(container);
-                            }
+                            },
+                            formItem: { visible: false }
                         }
                     ],
+                    masterDetail: {
+                        enabled: true,
+                        template(container, options) {
+                            var currentEmployeeData = options.data;
+
+                            $('<div>')
+                                .dxDataGrid({
+                                    columnAutoWidth: true,
+                                    showBorders: true,
+                                    columns: ['Subject', {
+                                        dataField: 'StartDate',
+                                        dataType: 'date',
+                                    }, {
+                                            dataField: 'DueDate',
+                                            dataType: 'date',
+                                        }, 'Priority', {
+                                            caption: 'Completed',
+                                            dataType: 'boolean',
+                                            calculateCellValue(rowData) {
+                                                return rowData.Status === 'Completed';
+                                            },
+                                        }],
+                                        remoteOperations: {
+                                            paging: true,
+                                            filtering: true,
+                                            sorting: true,
+                                            grouping: true,
+                                            summary: true,
+                                            groupPaging: true
+                                        },
+
+
+                                    dataSource: DevExpress.data.AspNet.createStore({
+
+                                        key: 'id',
+                                        loadUrl: `${url}/getusers`,
+                                        updateUrl: `${url}/updateusers`
+                                    }),
+
+
+                                }).appendTo(container);
+                        },
+                    },
 
                 }).dxDataGrid("instance");
             }
