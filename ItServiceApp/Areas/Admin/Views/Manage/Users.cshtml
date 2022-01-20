@@ -169,7 +169,7 @@
                     masterDetail: {
                         enabled: true,
                         template(container, options) {
-                            var currentUser = options.data;
+                            var current = options.data;
 
                             $('<div>')
                                 .dxDataGrid({
@@ -193,24 +193,25 @@
                                     mode: 'form',
                                     allowAdding: true,
                                     allowUpdating: true,
-                                    allowDeleting: true
-                                 
-
+                                    allowDeleting: true 
+                                  
+                                     
                                 },
-                                        remoteOperations: {        
+                                        remoteOperations: {          
                                             paging: true,
                                             filtering: true,
                                             sorting: true,
                                             grouping: true,
                                             summary: true,
-                                            groupPaging: true
+                                            groupPaging: true 
                                         },
 
-
+                                         
                                     dataSource: DevExpress.data.AspNet.createStore({
 
                                         key: 'id',
                                         loadUrl: "../../../api/addressapi/get",
+                                        loadParams: {userId: current.id},
                                         insertUrl: "../../../api/addressapi/insert",
                                         updateUrl: "../../../api/addressapi/update",
                                         deleteUrl: "../../../api/addressapi/delete",

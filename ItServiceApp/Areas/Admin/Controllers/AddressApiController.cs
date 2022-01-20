@@ -24,9 +24,9 @@ namespace ItServiceApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(DataSourceLoadOptions options)
+        public IActionResult Get(string userId, DataSourceLoadOptions options)
         {
-            var data = _dbContext.Addresses;
+            var data = _dbContext.Addresses.Where(x => x.UserId == userId);
 
             return Ok(DataSourceLoader.Load(data, options));
         }
