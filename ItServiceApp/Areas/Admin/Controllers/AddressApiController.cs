@@ -24,7 +24,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet]
+        [HttpGet] 
         public IActionResult Get(string userId, DataSourceLoadOptions options)
         {
             var data = _dbContext.Addresses
