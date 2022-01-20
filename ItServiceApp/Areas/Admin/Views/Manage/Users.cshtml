@@ -60,12 +60,19 @@
 
 
                 dataGrid = $('#dxGrid').dxDataGrid({
-                    remoteOperations: { paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
+                    remoteOperations: {
+                        paging: true,
+                        filtering: true,
+                        sorting: true,
+                        grouping: true,
+                        summary: true,
+                        groupPaging: true
+                    },
 
                     dataSource: DevExpress.data.AspNet.createStore({
 
                         key: 'id',
-                        loadUrl: `${url}/getusers`
+                        loadUrl: `${url}/getusers`,
                         updateUrl: `${url}/updateusers`
                     }),
                     editing: {
@@ -113,7 +120,8 @@
                             capion: 'Id',
                             dataField: "id",
                             visible: false,
-                            allowFiltering: false
+                            allowFiltering: false,
+                            formItem: {visible: false}
                         },
                         {
                             caption: 'Ad',
@@ -128,7 +136,7 @@
                             dataField: "email"
                         },
                         {
-                            caption: 'EMail Onay'
+                            caption: 'EMail Onay',
                             dataField: 'emailConfirmed',
                             dataType: 'boolean'
                         },
