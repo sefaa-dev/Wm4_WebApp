@@ -176,20 +176,55 @@
                                   
                                     columnAutoWidth: true,
                                     showBorders: true,
-                                    //columns: ['Subject', {
-                                    //    dataField: 'StartDate',
-                                    //    dataType: 'date',
-                                    //}, {
-                                    //        dataField: 'DueDate',
-                                    //        dataType: 'date',
-                                    //    }, 'Priority', {
-                                    //        caption: 'Completed',
-                                    //        dataType: 'boolean',
-                                    //        calculateCellValue(rowData) {
-                                    //            return rowData.Status === 'Completed';
-                                    //        },
-                                    //    }],
-                                    editing{
+                                    columns: [
+                                        {
+                                            caption: "Adres",
+                                            dataField: "Line",
+                                        },
+                                        {
+                                            caption: "Posta Kodu",
+                                            dataField: "postCode",
+                                        },
+                                        {
+                                            caption: "Adres Tipi",
+                                            dataField: "addressType",
+                                        },
+                                        {
+                                            caption: "İl",
+                                           
+                                            dataField: "state.city.name",
+                                            lookup: {
+                                                dataSource: {
+                                                    store: DevExpress.data.AspNet.createStore({
+                                                        key: "id",
+                                                        loadUrl: "../../../api/addressapi/citylookup"
+                                                    }),
+                                                    _fnFeatureHtmlPaginate: true,
+                                                    pageSize: 10
+                                                },
+                                                displayExpr: "text",
+                                                valueExpre: "value"
+                                            }
+                                        },
+                                        {
+                                            caption: "İlçe",
+                                            dataField: "state.name",
+                                            lookup: {
+                                                dataSource: {
+                                                    store: DevExpress.data.AspNet.createStore({
+                                                        key: "id",
+                                                        loadUrl: "../../../api/addressapi/statelookup"
+                                                    }),
+                                                    _fnFeatureHtmlPaginate: true,
+                                                    pageSize: 10
+                                                },
+                                                displayExpr: "text",
+                                                valueExpre: "value"
+                                            }
+                                        }
+                                        ],
+                                    
+                                    editing: {
                                     mode: 'form',
                                     allowAdding: true,
                                     allowUpdating: true,
