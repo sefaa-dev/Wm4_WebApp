@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace ItServiceApp.Areas.Admin.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [ApiController]
+
     [Authorize(Roles = "Admin")]
     public class UserApiController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace ItServiceApp.Areas.Admin.Controllers
            
         }
 
-        [HttpPut("update-users")]
+        [HttpPut]
         public async Task<IActionResult> UpdateUsers(string key, string values)
         {
             var data = _userManager.Users.FirstOrDefault(x => x.Id == key);

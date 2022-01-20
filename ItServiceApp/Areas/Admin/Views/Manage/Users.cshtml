@@ -49,7 +49,7 @@
     <script src="~/vendor/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
 
     <script>
-const { default: DevExpress } = require("devextreme");
+
 
         var dataGrid = null;
         $(() => {
@@ -66,7 +66,12 @@ const { default: DevExpress } = require("devextreme");
 
                         key: 'id',
                         loadUrl: `${url}/getusers`
+                        updateUrl: `${url}/updateusers`
                     }),
+                    editing: {
+                        mode: 'row',
+                        allowUpdating: true
+                    },
 
                     showColumnLines: true,
                     allowColumnResizing: true,
@@ -151,7 +156,7 @@ const { default: DevExpress } = require("devextreme");
 
                 }).dxDataGrid("instance");
             }
-
+            loadGrid();
         })
     </script>
 }
