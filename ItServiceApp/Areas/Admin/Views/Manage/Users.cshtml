@@ -55,7 +55,7 @@
     <script>
 
 
-        var dataGrid = null;
+   var dataGrid = null;
         $(() => {
 
             var url = '../../../api/userapi';
@@ -216,14 +216,13 @@
                                                             key: "id",
                                                             loadUrl: "../../../api/addressapi/statelookup"
                                                         }),
-                                                        filter: opt.data ? ['stateId', '=', opt.data.stateId] : null
+                                                 filter: opt.data ? ['CityId', '=', opt.data.state.cityId] : null
                                                     };
                                                 },
                                                     _fnFeatureHtmlPaginate: true,
                                                     pageSize: 10,
-                                                
-                                                displayExpr: "text",
-                                                valueExpre: "value"
+                                                    displayExpr: "text",
+                                                    valueExpre: "value"
                                             }
                                         }
                                         ],
@@ -233,7 +232,6 @@
                                     allowAdding: true,
                                     allowUpdating: true,
                                     allowDeleting: true
-
 
                                 },
                                         remoteOperations: {

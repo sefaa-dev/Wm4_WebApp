@@ -115,7 +115,9 @@ namespace ItServiceApp.Areas.Admin.Controllers
                 {
                     id = x.Id,
                     Value = x.Id,
-                    Text = $"{x.Name}"
+                    Text = $"{x.Name}",
+             
+                    
                 });
             return Ok(DataSourceLoader.Load(data, loadOptions));
         }
@@ -124,12 +126,14 @@ namespace ItServiceApp.Areas.Admin.Controllers
         public object StateLookup(DataSourceLoadOptions loadOptions)
         {
             var data = _dbContext.States
+              
                 .OrderBy(x => x.Name)
                 .Select(x => new
                 {
                     id = x.Id,
                     Value = x.Id,
-                    Text = $"{x.Name}"
+                    Text = $"{x.Name}",
+                    CityId = x.CityId
                 });
             return Ok(DataSourceLoader.Load(data, loadOptions));
         }
