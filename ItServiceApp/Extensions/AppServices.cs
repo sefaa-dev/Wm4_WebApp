@@ -11,7 +11,7 @@ namespace ItServiceApp.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddAutoMapper(options =>   
+            services.AddAutoMapper(options =>    
             {
                 options.AddProfile(typeof(PaymentProfile));
                 options.AddProfile(typeof(AccountProfile));
