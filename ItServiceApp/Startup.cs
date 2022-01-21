@@ -1,4 +1,5 @@
 using ItServiceApp.Data;
+using ItServiceApp.Extensions;
 using ItServiceApp.InjectOrnek;
 using ItServiceApp.MapperProfiles;
 using ItServiceApp.Models.Identity;
@@ -55,7 +56,7 @@ namespace ItServiceApp
 
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<MyContext>().AddDefaultTokenProviders();
-                
+
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -66,16 +67,18 @@ namespace ItServiceApp
                 options.SlidingExpiration = true;
             });
 
-            services.AddAutoMapper(options =>
-            {
-                options.AddProfile(typeof(AccountProfile));
-                options.AddProfile(typeof(PaymentProfile));
-            });
+            services.AddApplicationServices(this.Configuration);
 
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IPaymentService, IyzicoPaymentService>();
-            services.AddScoped<IMyDependency, NewMyDependency>(); //loose coupling
-            services.AddControllersWithViews();
+         
+
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(
+                options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
