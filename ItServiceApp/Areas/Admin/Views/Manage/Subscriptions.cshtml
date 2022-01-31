@@ -127,8 +127,14 @@
                     },
                     {
                         caption: 'Ay',
-                        dataField: 'Month'
-                        dataType: 'int'
+                        dataField: 'Month',
+                        dataType: 'number',                       
+                    },
+                    {
+                        caption: 'Fiyat',
+                        dataField: 'price',
+                        dataType: "number",
+                        format: "#.00 ₺"
                     }
                 ]
             }).dxDataGrid("instance");
