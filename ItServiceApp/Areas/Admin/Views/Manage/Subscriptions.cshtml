@@ -109,7 +109,28 @@
                 selection: {
                     mode: "multiple"
                 },
-                columns : []
+                columns: [
+                    {
+                        caption: 'Id',
+                        dataField: "id",
+                        visible: false,
+                        allowFiltering: false,
+                        formItem: { visible: false }
+                    },
+                    {
+                        caption: 'Ad',
+                        dataField: 'name'
+                    },
+                    {
+                        caption: 'Açıklama',
+                        dataField: 'description'
+                    },
+                    {
+                        caption: 'Ay',
+                        dataField: 'Month'
+                        dataType: 'int'
+                    }
+                ]
             }).dxDataGrid("instance");
         });
 
