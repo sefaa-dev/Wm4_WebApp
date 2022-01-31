@@ -27,6 +27,7 @@ namespace ItServiceApp.Controllers
 
             _myDependency.Log("Home/Index'e girildi");
             var data = _dbContext.SubscriptionTypes
+                .ToList()
                 .Select(x => _mapper.Map<SubscriptionTypeViewModel>(x))
                 .OrderBy(x => x.Price)
                 .ToList();
