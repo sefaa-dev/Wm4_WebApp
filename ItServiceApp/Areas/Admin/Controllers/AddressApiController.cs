@@ -1,16 +1,14 @@
-﻿using System;
-using System.Linq;
-using DevExtreme.AspNet.Data;
+﻿using DevExtreme.AspNet.Data;
 using ItServiceApp.Data;
 using ItServiceApp.Extensions;
 using ItServiceApp.Models.Entities;
 using ItServiceApp.ViewModels;
-using Iyzipay.Model.V2;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace ItServiceApp.Areas.Admin.Controllers
 {
@@ -24,7 +22,8 @@ namespace ItServiceApp.Areas.Admin.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet] 
+        #region Cruds
+        [HttpGet]
         public IActionResult Get(string userId, DataSourceLoadOptions options)
         {
             var data = _dbContext.Addresses
@@ -64,10 +63,12 @@ namespace ItServiceApp.Areas.Admin.Controllers
                 });
             return Ok(new JsonResponseViewModel());
         }
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(Guid key, string values)
         {
-            var data = _dbContext.Addresses.Find(key);
+            var data = _dbContext.Addresses
+                .Include(x => x.State.City)
+                .FirstOrDefault(x => x.Id == key);
             if (data == null)
                 return BadRequest(new JsonResponseViewModel()
                 {
@@ -88,23 +89,21 @@ namespace ItServiceApp.Areas.Admin.Controllers
                 });
             return Ok(new JsonResponseViewModel());
         }
-
         [HttpDelete]
         public IActionResult Delete(Guid key)
         {
             var data = _dbContext.Addresses.Find(key);
             if (data == null)
-
                 return StatusCode(StatusCodes.Status409Conflict, "Adres bulunamadı");
 
             _dbContext.Addresses.Remove(data);
 
             var result = _dbContext.SaveChanges();
             if (result == 0)
-                return BadRequest("Silme işlmei başarısız");
+                return BadRequest("Silme işlemi başarısız");
             return Ok(new JsonResponseViewModel());
-
         }
+        #endregion
 
         [HttpGet]
         public object CityLookup(DataSourceLoadOptions loadOptions)
@@ -115,18 +114,15 @@ namespace ItServiceApp.Areas.Admin.Controllers
                 {
                     id = x.Id,
                     Value = x.Id,
-                    Text = $"{x.Name}",
-             
-                    
+                    Text = $"{x.Name}"
                 });
+
             return Ok(DataSourceLoader.Load(data, loadOptions));
         }
-
         [HttpGet]
         public object StateLookup(DataSourceLoadOptions loadOptions)
         {
             var data = _dbContext.States
-              
                 .OrderBy(x => x.Name)
                 .Select(x => new
                 {
@@ -135,8 +131,8 @@ namespace ItServiceApp.Areas.Admin.Controllers
                     Text = $"{x.Name}",
                     CityId = x.CityId
                 });
+
             return Ok(DataSourceLoader.Load(data, loadOptions));
         }
-
     }
 }
