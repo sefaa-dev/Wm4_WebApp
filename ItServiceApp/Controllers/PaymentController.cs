@@ -90,20 +90,24 @@ namespace ItServiceApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new PaymentViewModel()
-            {
+            var model = _mapper.Map<SubscriptionTypeViewModel>(data);
 
-                BasketModel = new BasketModel()
-                {
-                    Category1 = data.Name,
-                    ItemType = BasketItemType.VIRTUAL.ToString(),
-                    Id = data.Id.ToString(),
-                    Name = data.Name,
-                    Price = data.Price.ToString(new CultureInfo("en-us"))
-                }
+            ViewBag.Subs = model;
 
-            };
-            return View(model);
+            //var model = new PaymentViewModel()
+            //{
+
+            //    BasketModel = new BasketModel()
+            //    {
+            //        Category1 = data.Name,
+            //        ItemType = BasketItemType.VIRTUAL.ToString(),
+            //        Id = data.Id.ToString(),
+            //        Name = data.Name,
+            //        Price = data.Price.ToString(new CultureInfo("en-us"))
+            //    }
+
+            //};
+            return View();
         }
 
     }
