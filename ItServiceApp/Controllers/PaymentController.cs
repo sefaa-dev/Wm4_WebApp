@@ -1,12 +1,16 @@
-﻿using ItServiceApp.Extensions;
+﻿using AutoMapper;
+using ItServiceApp.Data;
+using ItServiceApp.Extensions;
 using ItServiceApp.Models;
 using ItServiceApp.Models.Payment;
 using ItServiceApp.Services;
 using ItServiceApp.ViewModels;
+using Iyzipay.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +19,8 @@ namespace ItServiceApp.Controllers
     public class PaymentController : Controller
     {
         private readonly IPaymentService _paymentService;
+        private readonly MyContext _dbContext;
+        private readonly IMapper _mapper;
         public PaymentController(IPaymentService paymentService)
         {
             _paymentService = paymentService;
@@ -73,6 +79,31 @@ namespace ItServiceApp.Controllers
 
             var result = _paymentService.Pay(paymentModel);
             return View();
+        }
+
+        [Authorize]
+        public IActionResult Purchase(Guid id)
+        {
+            var data = _dbContext.SubscriptionTypes.Find(id);
+            if (data == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new PaymentViewModel()
+            {
+
+                BasketModel = new BasketModel()
+                {
+                    Category1 = data.Name,
+                    ItemType = BasketItemType.VIRTUAL.ToString(),
+                    Id = data.Id.ToString(),
+                    Name = data.Name,
+                    Price = data.Price.ToString(new CultureInfo("en-us"))
+                }
+
+            };
+            return View(model);
         }
 
     }
