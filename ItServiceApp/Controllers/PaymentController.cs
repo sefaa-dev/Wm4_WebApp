@@ -172,9 +172,9 @@ namespace ItServiceApp.Controllers
             var paymentModel = new PaymentModel()
             {
                 Installment = model.Installment,
-                Address = new AddressModel(),
+                Address = addressModel,
                 BasketList = new List<BasketModel>() { model.BasketModel },
-                Customer = new CustomerModel(),
+                Customer = customerModel,
                 CardModel = model.CardModel,
                 Price = model.Amount,
                 UserId = HttpContext.GetUserId(),
