@@ -7,12 +7,15 @@ using AutoMapper;
 using ItServiceApp.Data;
 using ItServiceApp.Extensions;
 using ItServiceApp.Models;
+using ItServiceApp.Models.Identity;
 using ItServiceApp.Models.Payment;
 using ItServiceApp.Services;
 using ItServiceApp.ViewModels;
 using Iyzipay.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ItServiceApp.Controllers
 {
@@ -21,12 +24,15 @@ namespace ItServiceApp.Controllers
         private readonly IPaymentService _paymentService;
         private readonly MyContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PaymentController(IPaymentService paymentService, MyContext dbContext, IMapper mapper)
+        public PaymentController(IPaymentService paymentService, MyContext dbContext, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _paymentService = paymentService;
             _dbContext = dbContext;
             _mapper = mapper;
+            _userManager = userManager;
+
             var cultureInfo = CultureInfo.GetCultureInfo("en-US");
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
@@ -128,6 +134,18 @@ namespace ItServiceApp.Controllers
                 Id = type.Id.ToString(),
                 Name = type.Name,
                 Price = type.Price.ToString(new CultureInfo("en-us"))
+            };
+
+            var adress = _dbContext.Addresses
+                .Include(x => x.State.City)
+                .First(x => x.Id == Guid.Parse(model.AddressModel.Id));
+
+            var addressModel = new AddressModel()
+            {
+                City = Address.State.City.Name,
+                ContactName = ",",
+                Country = Türkiye,
+                Description = address.Line
             };
 
             var paymentModel = new PaymentModel()
