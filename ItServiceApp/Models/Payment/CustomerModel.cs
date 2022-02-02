@@ -15,7 +15,7 @@ namespace ItServiceApp.Models
         public string GsmNumber { get; set; }
         public string RegistractionDate { get; set; }
         public string LastLoginDate { get; set; }
-        public string RegistractionAddress { get; set; }
+        public string RegistrationAddress { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string ZipCode { get; set; }

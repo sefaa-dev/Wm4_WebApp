@@ -165,7 +165,8 @@ namespace ItServiceApp.Controllers
                 Surname = user.SurName,
                 ZipCode = addressModel.ZipCode,
                 LastLoginDate = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}",
-                RegistractionDate = $"{user.CreatedDate:yyyy-MM-dd HH:mm:ss}"
+                RegistractionDate = $"{user.CreatedDate:yyyy-MM-dd HH:mm:ss}",
+                RegistrationAddress = address.Line
 
             };
 
