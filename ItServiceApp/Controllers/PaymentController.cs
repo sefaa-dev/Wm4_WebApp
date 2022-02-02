@@ -111,11 +111,21 @@ namespace ItServiceApp.Controllers
         [HttpPost]
         public IActionResult Purchase(PaymentViewModel model)
         {
+            var type = _dbContext.SubscriptionTypes.Find(Guid.Parse(model.BasketModel.Id));
+            var basketModel = new BasketModel()
+            {
+                Category1 = type.Name,
+                ItemType = BasketItemType.VIRTUAL.ToString(),
+                Id = type.Id.ToString(),
+                Name = type.Name,
+                Price = type.Price.ToString(new CultureInfo("en-us"))
+            };
+
             var paymentModel = new PaymentModel()
             {
                 Installment = model.Installment,
                 Address = new AddressModel(),
-                BasketList = new List<BasketModel>(),
+                BasketList = new List<BasketModel>() { model.BasketModel },
                 Customer = new CustomerModel(),
                 CardModel = model.CardModel,
                 Price = model.Amount,
