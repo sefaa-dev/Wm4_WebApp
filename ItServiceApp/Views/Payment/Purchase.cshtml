@@ -1,4 +1,5 @@
-﻿@model PaymentViewModel
+﻿@using System.Globalization
+@model PaymentViewModel
 
 @{
     ViewBag.Title = $"Ödeme Sayfası";
@@ -19,7 +20,7 @@
         <div class="user-actions mb-40">
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
-        <form asp-action="Index" method="post">
+        <form asp-action="Purchase" method="post">
             <input asp-for="Installment" type="hidden" id="hdInstallment" value="1" />
             <div class="row">
                 <div class="col-lg-6">
@@ -97,12 +98,13 @@
     $(document).ready(function() {
         console.log("Jquery OK");
     });
-    $("#txtCardNumber").keyup(function() {
+    $("#txtCardNumber").blur(function() {
         var bin = $(this).val();
-        if (bin.length >=6) {
+        if (bin.length >= 6 && bin.length <= 16) {
             //console.log(bin);
             var model = {
-                binNumber: bin
+                binNumber: bin,
+                price: @ViewBag.Subs.Price.ToString(new CultureInfo("en-US"))
             };
             $.ajax({
                 url: '@Url.Action("CheckInstallment", "Payment")',

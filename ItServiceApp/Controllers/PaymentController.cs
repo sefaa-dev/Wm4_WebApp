@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using AutoMapper;
 using ItServiceApp.Data;
 using ItServiceApp.Extensions;
 using ItServiceApp.Models;
@@ -8,11 +13,6 @@ using ItServiceApp.ViewModels;
 using Iyzipay.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ItServiceApp.Controllers
 {
@@ -21,11 +21,16 @@ namespace ItServiceApp.Controllers
         private readonly IPaymentService _paymentService;
         private readonly MyContext _dbContext;
         private readonly IMapper _mapper;
-        public PaymentController(IPaymentService paymentService)
+
+        public PaymentController(IPaymentService paymentService, MyContext dbContext, IMapper mapper)
         {
             _paymentService = paymentService;
+            _dbContext = dbContext;
+            _mapper = mapper;
+            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
-
         [Authorize]
         public IActionResult Index()
         {
@@ -34,16 +39,17 @@ namespace ItServiceApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CheckInstallment(string binNumber)
+        public IActionResult CheckInstallment(string binNumber, decimal price)
         {
-            if (binNumber.Length != 6)
+            if (binNumber.Length < 6 || binNumber.Length > 16)
                 return BadRequest(new
-            {
-                Message = "Bad req."
-            });
-            var result = _paymentService.CheckInstallments(binNumber, 1000);
+                {
+                    Message = "Bad req."
+                });
+
+            var result = _paymentService.CheckInstallments(binNumber, price);
             return Ok(result);
-        } 
+        }
 
         [Authorize]
         [HttpPost]
@@ -58,24 +64,17 @@ namespace ItServiceApp.Controllers
                 CardModel = model.CardModel,
                 Price = 1000,
                 UserId = HttpContext.GetUserId(),
-                Ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
-
-
+                Ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString()
             };
 
-            var installmentInfo =  _paymentService.CheckInstallments(paymentModel.CardModel.CardNumber.Substring(0, 6), paymentModel.Price);
+            var installmentInfo = _paymentService.CheckInstallments(paymentModel.CardModel.CardNumber.Substring(0, 6), paymentModel.Price);
 
-            var installmentNumber = installmentInfo.InstallmentPrices.FirstOrDefault(x => x.InstallmentNumber == model.Installment);
+            var installmentNumber =
+                installmentInfo.InstallmentPrices.FirstOrDefault(x => x.InstallmentNumber == model.Installment);
 
-            if (installmentNumber != null)
-            {
-                paymentModel.PaidPrice = decimal.Parse(installmentNumber.TotalPrice.Replace('.',','));
-            }
-            else
-            {
-                paymentModel.PaidPrice = decimal.Parse(installmentInfo.InstallmentPrices[0].TotalPrice.Replace('.', ','));
-            }
+            paymentModel.PaidPrice = decimal.Parse(installmentNumber != null ? installmentNumber.TotalPrice.Replace('.', ',') : installmentInfo.InstallmentPrices[0].TotalPrice.Replace('.', ','));
 
+            //legacy code
 
             var result = _paymentService.Pay(paymentModel);
             return View();
@@ -96,7 +95,6 @@ namespace ItServiceApp.Controllers
 
             //var model = new PaymentViewModel()
             //{
-
             //    BasketModel = new BasketModel()
             //    {
             //        Category1 = data.Name,
@@ -105,10 +103,37 @@ namespace ItServiceApp.Controllers
             //        Name = data.Name,
             //        Price = data.Price.ToString(new CultureInfo("en-us"))
             //    }
-
             //};
+
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Purchase(PaymentViewModel model)
+        {
+            var paymentModel = new PaymentModel()
+            {
+                Installment = model.Installment,
+                Address = new AddressModel(),
+                BasketList = new List<BasketModel>(),
+                Customer = new CustomerModel(),
+                CardModel = model.CardModel,
+                Price = model.Amount,
+                UserId = HttpContext.GetUserId(),
+                Ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString()
+            };
+
+            var installmentInfo = _paymentService.CheckInstallments(paymentModel.CardModel.CardNumber.Substring(0, 6), paymentModel.Price);
+
+            var installmentNumber =
+                installmentInfo.InstallmentPrices.FirstOrDefault(x => x.InstallmentNumber == model.Installment);
+
+            paymentModel.PaidPrice = decimal.Parse(installmentNumber != null ? installmentNumber.TotalPrice.Replace('.', ',') : installmentInfo.InstallmentPrices[0].TotalPrice.Replace('.', ','));
+
+            //legacy code
+
+            var result = _paymentService.Pay(paymentModel);
+            return View();
+        }
     }
 }
