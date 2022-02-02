@@ -152,6 +152,23 @@ namespace ItServiceApp.Controllers
                 ZipCode = address.PostCode
             };
 
+            var customerModel = new CustomerModel()
+            {
+                City = address.State.City.Name,
+                Country = "Türkiye",
+                Email = user.Email,
+                GsmNumber = user.PhoneNumber,
+                Id = user.Id,
+                IdentityNumber = user.Id,
+                Ip = Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
+                Name = user.Name,
+                Surname = user.SurName,
+                ZipCode = addressModel.ZipCode,
+                LastLoginDate = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}",
+                RegistractionDate = $"{user.CreatedDate:yyyy-MM-dd HH:mm:ss}"
+
+            };
+
             var paymentModel = new PaymentModel()
             {
                 Installment = model.Installment,
