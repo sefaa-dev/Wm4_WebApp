@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using ItServiceApp.Data;
 using ItServiceApp.Extensions;
@@ -124,7 +125,7 @@ namespace ItServiceApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Purchase(PaymentViewModel model)
+        public async Task<IActionResult> Purchase(PaymentViewModel model)
         {
             var type = _dbContext.SubscriptionTypes.Find(Guid.Parse(model.BasketModel.Id));
             var basketModel = new BasketModel()
@@ -135,6 +136,8 @@ namespace ItServiceApp.Controllers
                 Name = type.Name,
                 Price = type.Price.ToString(new CultureInfo("en-us"))
             };
+
+            var user = await _userManager.FindByIdAsync(HttpContext.GetUserId());
 
             var address = _dbContext.Addresses
                 .Include(x => x.State.City)
