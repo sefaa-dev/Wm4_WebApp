@@ -93,7 +93,12 @@ namespace ItServiceApp.Controllers
 
             ViewBag.Subs = model;
 
-            var addressess = _dbContext.Addresses.Where(x => x.UserId == HttpContext.GetUserId()).ToList();
+            var addressess = _dbContext.Addresses
+                .Where(x => x.UserId == HttpContext.GetUserId())
+                .ToList()
+                .Select(x => _mapper.Map<AddressViewModel>(x))
+                .ToList();
+            
 
             var model2 = new PaymentViewModel()
             {
