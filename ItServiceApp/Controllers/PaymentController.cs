@@ -98,6 +98,8 @@ namespace ItServiceApp.Controllers
                 .ToList()
                 .Select(x => _mapper.Map<AddressViewModel>(x))
                 .ToList();
+
+            ViewBag.Addressess = addressess;
             
 
             var model2 = new PaymentViewModel()

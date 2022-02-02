@@ -25,6 +25,18 @@
             <input type="hidden" id="Amount" name="Amount" value='@ViewBag.Subs.Price.ToString(new CultureInfo("en-US"))' />
             <input type="hidden" asp-for="BasketModel.Id"/>
             <div class="row">
+                <div class="col-md-12">
+                    <select asp-for="AddressModel.Id">
+                        @foreach (AddressViewModel item in ViewBag.Addresses)
+	{
+		 <option value="@item.Id">@item.Line</option>
+	}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row">
                 <div class="col-lg-6">
                     <div class="billing-details">
                         <h3 class="title">Billing Details</h3>
