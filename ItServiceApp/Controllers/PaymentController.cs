@@ -93,19 +93,19 @@ namespace ItServiceApp.Controllers
 
             ViewBag.Subs = model;
 
-            //var model = new PaymentViewModel()
-            //{
-            //    BasketModel = new BasketModel()
-            //    {
-            //        Category1 = data.Name,
-            //        ItemType = BasketItemType.VIRTUAL.ToString(),
-            //        Id = data.Id.ToString(),
-            //        Name = data.Name,
-            //        Price = data.Price.ToString(new CultureInfo("en-us"))
-            //    }
-            //};
+            var model2 = new PaymentViewModel()
+            {
+                BasketModel = new BasketModel()
+                {
+                    Category1 = data.Name,
+                    ItemType = BasketItemType.VIRTUAL.ToString(),
+                    Id = data.Id.ToString(),
+                    Name = data.Name,
+                    Price = data.Price.ToString(new CultureInfo("en-us"))
+                }
+            };
 
-            return View();
+            return View(model2);
         }
 
         [HttpPost]
