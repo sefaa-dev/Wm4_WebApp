@@ -136,16 +136,17 @@ namespace ItServiceApp.Controllers
                 Price = type.Price.ToString(new CultureInfo("en-us"))
             };
 
-            var adress = _dbContext.Addresses
+            var address = _dbContext.Addresses
                 .Include(x => x.State.City)
                 .First(x => x.Id == Guid.Parse(model.AddressModel.Id));
 
             var addressModel = new AddressModel()
             {
-                City = Address.State.City.Name,
+                City = address.State.City.Name,
                 ContactName = ",",
-                Country = Türkiye,
-                Description = address.Line
+                Country = "Türkiye",
+                Description = address.Line,
+                ZipCode = address.PostCode
             };
 
             var paymentModel = new PaymentModel()
