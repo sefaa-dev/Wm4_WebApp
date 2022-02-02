@@ -93,6 +93,8 @@ namespace ItServiceApp.Controllers
 
             ViewBag.Subs = model;
 
+            var addressess = _dbContext.Addresses.Where(x => x.UserId == HttpContext.GetUserId()).ToList();
+
             var model2 = new PaymentViewModel()
             {
                 BasketModel = new BasketModel()
