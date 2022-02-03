@@ -137,6 +137,13 @@ namespace ItServiceApp.Controllers
                 Price = type.Price.ToString(new CultureInfo("en-us"))
             };
 
+
+
+
+
+
+
+
             var user = await _userManager.FindByIdAsync(HttpContext.GetUserId());
 
             var address = _dbContext.Addresses
@@ -174,7 +181,7 @@ namespace ItServiceApp.Controllers
             {
                 Installment = model.Installment,
                 Address = addressModel,
-                BasketList = new List<BasketModel>() { model.BasketModel },
+                BasketList = new List<BasketModel>() { basketModel },
                 Customer = customerModel,
                 CardModel = model.CardModel,
                 Price = model.Amount,
@@ -190,7 +197,17 @@ namespace ItServiceApp.Controllers
             paymentModel.PaidPrice = decimal.Parse(installmentNumber != null ? installmentNumber.TotalPrice : installmentInfo.InstallmentPrices[0].TotalPrice);
 
             //legacy code
+            var sub = _mapper.Map<SubscriptionTypeViewModel>(type);
 
+            ViewBag.Subs = sub;
+
+            var addressess = _dbContext.Addresses
+              .Where(x => x.UserId == HttpContext.GetUserId())
+              .ToList()
+              .Select(x => _mapper.Map<AddressViewModel>(x))
+              .ToList();
+
+            ViewBag.Addressess = addressess;
             var result = _paymentService.Pay(paymentModel);
             return View();
         }

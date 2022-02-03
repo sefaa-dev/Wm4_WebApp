@@ -32,7 +32,7 @@ namespace ItServiceApp.Services
                 ApiKey = section["ApiKey"],
                 SecretKey = section["SecretKey"],
                 BaseUrl = section["BaseUrl"],
-                ThreadsCallbackUrl = section["ThreedsCallbackUrl"]
+                ThreadsCallbackUrl = section["ThreadsCallbackUrl"]
             };
         }
 
@@ -58,6 +58,8 @@ namespace ItServiceApp.Services
                 Buyer = _mapper.Map<Buyer>(model.Customer),
                 BillingAddress = _mapper.Map<Address>(model.Address)
             };
+
+
 
             var basketItems = new List<BasketItem>();
             foreach (var basketModel in model.BasketList)

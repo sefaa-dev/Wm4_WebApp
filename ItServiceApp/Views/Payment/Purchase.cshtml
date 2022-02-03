@@ -7,9 +7,8 @@
 <!--====== Page Title start ======-->
 <partial name="Partials/_PageStartPartial" />
 <!--====== Page Title End ======-->
-
 <!--====== Shoping Checkout Start  ======-->
-<section class="shoping-checkout-area section-gap"> 
+<section class="shoping-checkout-area section-gap">
     <div class="container">
         <h3 class="title">@ViewBag.Subs.Name</h3>
         <ul class="breadcrumb-nav">
@@ -23,14 +22,14 @@
         <form asp-action="Purchase" method="post">
             <input asp-for="Installment" type="hidden" id="hdInstallment" value="1" />
             <input type="hidden" id="Amount" name="Amount" value='@ViewBag.Subs.Price.ToString(new CultureInfo("en-US"))' />
-            <input type="hidden" asp-for="BasketModel.Id"/>
+            <input type="hidden" asp-for="BasketModel.Id" />
             <div class="row">
                 <div class="col-md-12">
                     <select asp-for="AddressModel.Id">
-                        @foreach (AddressViewModel item in ViewBag.Addresses)
-	{
-		 <option value="@item.Id">@item.Line</option>
-	}
+                        @foreach (AddressViewModel item in ViewBag.Addressess) 
+                        {
+                            <option value="@item.Id">@item.Line</option>
+                        }
                     </select>
                 </div>
 
