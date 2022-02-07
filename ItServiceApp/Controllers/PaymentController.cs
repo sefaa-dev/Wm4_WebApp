@@ -137,13 +137,6 @@ namespace ItServiceApp.Controllers
                 Price = type.Price.ToString(new CultureInfo("en-us"))
             };
 
-
-
-
-
-
-
-
             var user = await _userManager.FindByIdAsync(HttpContext.GetUserId());
 
             var address = _dbContext.Addresses
